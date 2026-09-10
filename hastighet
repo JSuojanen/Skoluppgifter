@@ -1,0 +1,81 @@
+def get_choice(prompt, no_of_choices):
+    while True:
+        try:
+            choice = int(input(prompt))
+            if 1 <= choice <= no_of_choices:
+                return choice
+            print("Ogiltigt val. Försök igen.")
+        except ValueError:
+            print("Ogiltigt val. Försök igen.")
+
+
+def get_unit():
+    # Visar enhetsmenyn och skickar tillbaka resultatet till main i form av en sträng
+    print("Ange enhet (1. km/h 2.m/s 3.mph): ", end="")
+    choice = get_choice("", 3)
+    if choice == 1:
+        return "km/h"
+    elif choice == 2:
+        return "m/s"
+    elif choice == 3:
+        return "mph"
+
+
+def print_menu(from_unit, to_unit):
+    print(f"\n1. Ange enhet att omvandla FRÅN")
+    print(f"2. Ange enhet att omvandla TILL")
+    print(f"3. Omvandla från {from_unit} till {to_unit}")
+    print(f"4. Avsluta programmet")
+
+
+def get_speed(unit):
+    return float(input(f"Ange hastighet i {unit}: "))
+
+
+def convert_to_mps(speed, unit):
+    # Räknar om till m/s och skickar tillbaka resultatet till main för vidare hanteringd
+    if unit == "km/h":
+        return speed / 3.6
+    elif unit == "mph":
+        return speed * 0.44704
+    return speed
+
+
+def convert_to_target(speed, unit):
+    if unit == "km/h":
+        return speed * 3.6
+    elif unit == "mph":
+        return speed / 0.44704
+    return speed
+
+
+def print_result(original_speed, from_unit, converted_speed, to_unit):
+    print(f"{round(original_speed)} {from_unit} motsvarar {round(converted_speed)} {to_unit}")
+
+
+def convert(from_unit, to_unit):
+    speed = get_speed(from_unit)
+    speed_in_mps = convert_to_mps(speed, from_unit)
+    result = convert_to_target(speed_in_mps, to_unit)
+    print_result(speed, from_unit, result, to_unit)
+
+
+def main():
+    from_unit = "m/s"
+    to_unit = "km/h"
+
+    while True:
+        print_menu(from_unit, to_unit)
+        choice = get_choice("Ange val: ", 4)
+
+        if choice == 1:
+            from_unit = get_unit()
+        elif choice == 2:
+            to_unit = get_unit()
+        elif choice == 3:
+            convert(from_unit, to_unit)
+        elif choice == 4:
+            break
+
+
+main()
