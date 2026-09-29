@@ -1,0 +1,43 @@
+import random
+
+
+def generate_data(size: int) -> list[float]:
+    data = []
+    for _ in range(size):
+        tal = round(random.uniform(0.00, 10.00), 2)
+        data.append(tal)
+    return data
+
+
+def filter_avg(data: list[float]) -> None:
+    # 1. Skapa en kopia av ursprungsdatan att läsa ifrån
+    orig = data.copy()
+    n = len(data)
+
+    # 2. Första elementet (2 grannar)
+    data[0] = round((orig[0] + orig[1]) / 2, 2)
+
+    # 3. Elementen i mitten (3 grannar)
+    for i in range(1, n - 1):
+        data[i] = round((orig[i - 1] + orig[i] + orig[i + 1]) / 3, 2)
+
+    # 4. Sista elementet (2 grannar)
+    data[n - 1] = round((orig[n - 2] + orig[n - 1]) / 2, 2)
+
+
+def main():
+    # Skapa 10 mätvärden
+    mätvärden = generate_data(10)
+
+    print("Ursprunglig data:")
+    print(mätvärden)
+
+    # Filtrera listan
+    filter_avg(mätvärden)
+
+    print("Filtrerad data:")
+    print(mätvärden)
+
+
+if __name__ == "__main__":
+    main()

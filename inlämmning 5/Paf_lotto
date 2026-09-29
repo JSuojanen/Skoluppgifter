@@ -1,0 +1,44 @@
+import random
+
+def run_simulation():
+    round_number = 1
+
+    while True:
+        winning_numbers = random.sample(range(1, 53), 15)
+        winning_numbers.sort()
+
+        print(f"De rätta talen i omgång {round_number} är:")
+        print(winning_numbers)
+
+    
+        played_rows = [0] * 9
+        jackpot = False
+
+        for _ in range(1000):
+            played_row = random.sample(range(1, 53), 8)
+
+
+            correct_count = 0
+            for number in played_row:
+                if number in winning_numbers:
+                    correct_count += 1
+
+            played_rows[correct_count] += 1
+
+            if correct_count == 8:
+                jackpot = True
+
+        print("Spelade rader:")
+        for hits, count in enumerate(played_rows):
+            print(f"{hits} rätt: {count}")
+        print()  #Tom rad för finare utskrift
+
+        if jackpot:
+            print(f"Jackpot i omgång {round_number}!")
+            break
+
+        round_number += 1
+
+
+if __name__ == "__main__":
+    run_simulation()
